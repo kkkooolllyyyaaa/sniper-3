@@ -1,0 +1,49 @@
+<h:form styleClass="parameter-form" name="form" xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+    <h3>X value:</h3>
+    <h:selectOneMenu styleClass="select-one-y" value="#{point.x}">
+        <f:selectItem itemValue="-5" itemLabel="-5"/>
+        <f:selectItem itemValue="-4" itemLabel="-4"/>
+        <f:selectItem itemValue="-3" itemLabel="-3"/>
+        <f:selectItem itemValue="-2" itemLabel="-2"/>
+        <f:selectItem itemValue="-1" itemLabel="-1"/>
+        <f:selectItem itemValue="0" itemLabel="0"/>
+        <f:selectItem itemValue="1" itemLabel="1"/>
+        <f:selectItem itemValue="2" itemLabel="2"/>
+        <f:selectItem itemValue="3" itemLabel="3"/>
+    </h:selectOneMenu>
+
+    <h3>Y value:</h3>
+    <h:inputText value="#{point.y}" styleClass="text-input" maxlength="6" alt="(2;5)" size="13"/>
+
+    <h3>Radius:</h3>
+    <table class="r-table">
+        <tbody>
+        <tr>
+            <td><label>
+                <h:commandLink value="1" type="button" name="x" partialSubmit="true" action="#{point.initRadius(1.0)}"/>
+            </label></td>
+            <td><label>
+                <h:commandLink value="2" type="button" name="x" partialSubmit="true" action="#{point.initRadius(2.0)}"/>
+            </label></td>
+            <td><label>
+                <h:commandLink value="3" type="button" name="x" partialSubmit="true" action="#{point.initRadius(3.0)}"/>
+            </label></td>
+            <td><label>
+                <h:commandLink value="4" type="button" name="x" partialSubmit="true" action="#{point.initRadius(4.0)}"/>
+            </label></td>
+            <td><label>
+                <h:commandLink value="5" type="button" name="x" partialSubmit="true" action="#{point.initRadius(5.0)}"/>
+            </label></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="action-buttons">
+        <h:commandButton styleClass="action-button" type="submit" name="check" value="Check"
+                         action="#{resultTable.add}"
+                         disabled="false"/>
+        <h:commandButton styleClass="action-button" type="submit" name="clear" value="Clear"
+                         action="#{resultTable.clearTable}"/>
+    </div>
+</h:form>

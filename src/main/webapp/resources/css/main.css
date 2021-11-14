@@ -1,0 +1,18 @@
+/*Main*/
+
+body {
+    margin: 0;
+    color: #a25d06;
+    font-family: monospace, sans-serif;
+    font-size: 16px;
+    background: bisque;
+}
+
+.main-content {
+    margin: 1.5em auto 3em;
+    width: 72%;
+}
+
+label > a {
+    color: #8b4512;
+}
