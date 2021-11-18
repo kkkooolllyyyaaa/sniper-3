@@ -2,10 +2,6 @@
      xmlns:f="http://java.sun.com/jsf/core">
     <h:dataTable value="#{resultTable.points}" rows="5" var="row">
         <h:column>
-            <f:facet name="header">Id</f:facet>
-            <h:outputText value="#{row.id}"/>
-        </h:column>
-        <h:column>
             <f:facet name="header">X val</f:facet>
             <h:outputText value="#{row.x}"/>
         </h:column>

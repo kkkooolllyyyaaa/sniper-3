@@ -1,6 +1,9 @@
 package com.tsypk.sniper3.model;
 
+import com.tsypk.sniper3.database.PointsDAO;
+import com.tsypk.sniper3.database.SniperPointsDAO;
 import com.tsypk.sniper3.utils.PointService;
+import com.tsypk.sniper3.utils.PointValidator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,12 +29,15 @@ import java.util.Date;
 @EqualsAndHashCode
 public class ResultTable {
     private ArrayList<Point> points;
+    private PointsDAO pointsDAO;
     @Inject
     private Point point;
+    private Point svgPoint;
     private double curR;
 
     public ResultTable() {
-        points = new ArrayList<>();
+        pointsDAO = new SniperPointsDAO();
+        points = pointsDAO.getAll();
     }
 
     public void clearTable() {
@@ -39,21 +45,23 @@ public class ResultTable {
     }
 
     public void add() {
+        curR = point.getRadius();
         Point handledPoint = getHandledPoint();
-        if (points.size() == 5)
-            points.remove(0);
-        points.add(handledPoint);
+        if (pointsDAO.addPoint(handledPoint)) {
+            points.add(handledPoint);
+        }
     }
 
     private Point getHandledPoint() {
-        Point curPoint = new Point();
-        curPoint.setRadius(point.getRadius());
-        curPoint.setX(point.getX());
-        curPoint.setY(point.getY());
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
-        curPoint.setTime((dateFormat.format(new Date(System.currentTimeMillis()))));
+        Point curPoint = Point.builder()
+                .x(point.getX())
+                .y(point.getY())
+                .radius(point.getRadius())
+                .time((dateFormat.format(new Date(System.currentTimeMillis())))).build();
         PointService service = new PointService(curPoint);
         service.handle();
+        PointValidator.validate(curPoint);
         return curPoint;
     }
 }

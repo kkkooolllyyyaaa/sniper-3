@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @project sniper-3
  */
 public interface PointsDAO {
-    void addPoint(Point point);
+    boolean addPoint(Point point);
 
     ArrayList<Point> getAll();
 

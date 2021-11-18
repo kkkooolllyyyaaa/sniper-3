@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="hibernate">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.tsypk.sniper3.model.Point</class>
+        <properties>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+<!--            <property name="hibernate.hbm2ddl.auto" value="none"/>-->
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="postgres"/>
+            <!--            <property name="hibernate.connection.url" value="jdbc:postgresql://pg:5432/studs"/>-->
+            <!--            <property name="hibernate.connection.username" value="s311690"/>-->
+            <!--            <property name="hibernate.connection.password" value="pdw855"/>-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
+            <!--        Echo all executed SQL to stdout -->
+            <property name="show_sql" value="true"/>
+            <property name="format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

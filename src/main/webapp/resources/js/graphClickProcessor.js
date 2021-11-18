@@ -29,14 +29,13 @@ function getDot() {
 function sendRequest(x, y, r) {
     console.log(x, y, r);
     let http = new XMLHttpRequest();
-    const main = 'http://0.0.0.0:3675/web-lab-2-1.0-SNAPSHOT';
-    // const main = 'http://localhost:8080/web-lab-2-1.0-SNAPSHOT';
+    const main = 'http://localhost:8080/sniper-3-1.0-SNAPSHOT';
     const page = '/controller-servlet';
     const params = '?x=' + x.toString() + '&y=' + y + '&r=' + r.toString() + '&' + 'check=dotCheck';
     let url = main + page + params;
     localStorage.setItem('rVal', r);
     http.onload = function () {
-        document.location.href = 'index.jsp';
+        document.location.href = 'main.xhtml';
     };
     http.open('GET', url, true);
     http.send();

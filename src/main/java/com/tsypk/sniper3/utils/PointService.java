@@ -20,16 +20,16 @@ public class PointService {
     }
 
     public void handle() {
-        point.setResult(isValid() && isInArea());
+        point.setResult(isInArea());
     }
 
     private boolean isInArea() {
         return ((x >= 0 && y >= 0 && (x * x + y * y) <= (radius * radius / 4.0d)) ||
-                (x <= 0 && y <= 0 && Math.abs(y) <= radius && Math.abs(x) <= (radius / 2.0d)) ||
+                (x >= 0 && y <= 0 && Math.abs(y) <= radius && Math.abs(x) <= radius) ||
                 (x <= 0 && y >= 0 && y <= (x + radius / 2.0d)));
     }
 
-    private boolean isValid() {
+    private boolean setValid() {
         return x >= -5.0d && x <= 3.0d && y >= -3.0d && y <= 5.0d && radius >= 1.0 && radius <= 5.0;
     }
 }
