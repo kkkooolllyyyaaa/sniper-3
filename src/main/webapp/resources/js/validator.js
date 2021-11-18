@@ -1,25 +1,29 @@
 const form_name = 'j_idt21'
-let rVal = -1
 
 function validate() {
     const yVal = document.forms[form_name].elements[2].value
-    if (rVal === -1) {
-        alertR()
-    } else if (isEmpty(yVal)) {
+    const rVal = localStorage.getItem('rVal')
+    localStorage.removeItem('rVal')
+    if (isEmpty(yVal)) {
         alertY()
-    } else if (isEmpty(rVal)) {
+    } else if (isEmpty(rVal) || rVal == null) {
         alertR()
     } else {
         if (isNaN(yVal) || yVal < -3 || yVal > 5) {
             alertY()
-        } else if (isNaN(rVal) || rVal < 1 || rVal > 5) {
+        } else if (isNaN(+rVal) || +rVal < 1 || +rVal > 5) {
             alertR()
         }
     }
 }
 
 function initR(radius) {
-    rVal = radius
+    localStorage.removeItem('rVal')
+    localStorage.setItem('rVal', radius)
+}
+
+function alertX() {
+    alert('X must be number in range [-5; 3]');
 }
 
 function alertY() {
@@ -33,7 +37,7 @@ function alertR() {
         if (links.item(i).getAttribute('type') === 'button')
             links.item(i).style.background = 'red'
     }
-    alert('Choose R, must be number in range [1; 5]')
+    alert('Choose R, must be number in {1, 2, 3 , 4, 5}')
 }
 
 function isEmpty(obj) {
