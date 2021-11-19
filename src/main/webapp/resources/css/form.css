@@ -76,3 +76,10 @@
     font-weight: bold;
     background-color: #fcc57d;
 }
+
+.r-table {
+    text-decoration: none;
+}
+.r-table *{
+    text-decoration: none;
+}

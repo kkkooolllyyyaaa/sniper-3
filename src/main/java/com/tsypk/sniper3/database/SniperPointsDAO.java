@@ -6,6 +6,7 @@ import com.tsypk.sniper3.utils.PropertyManager;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,19 @@ public class SniperPointsDAO implements PointsDAO {
             }
         } else {
             throw new RuntimeException("Count must be positive");
+        }
+    }
+
+    @Override
+    public boolean clear() {
+        try {
+            em.getTransaction().begin();
+            Query query = em.createQuery("delete FROM Point");
+            query.executeUpdate();
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

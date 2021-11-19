@@ -1,7 +1,8 @@
 package com.tsypk.sniper3.model;
+
 import lombok.*;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -14,8 +15,7 @@ import java.io.Serializable;
  * @project sniper-3
  */
 @Named
-@ApplicationScoped
-
+@RequestScoped
 @Entity
 @Table(name = "points", indexes = {
         @Index(name = "idx_point_id", columnList = "id")
@@ -36,15 +36,15 @@ public class Point implements Serializable {
     @Column(nullable = false, name = "x")
     @Min(-5)
     @Max(3)
-    private double x;
+    private Double x;
     @Column(nullable = false, name = "y")
     @Min(-3)
     @Max(5)
-    private double y;
+    private Double y;
     @Column(nullable = false, name = "radius")
     @Min(1)
     @Max(5)
-    private double radius;
+    private Double radius;
     @Column(nullable = false, name = "result")
     private boolean result;
     @Column(nullable = false, name = "time")

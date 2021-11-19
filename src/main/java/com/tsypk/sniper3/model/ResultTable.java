@@ -33,7 +33,7 @@ public class ResultTable {
     @Inject
     private Point point;
     private Point svgPoint;
-    private double curR;
+    private String curR;
 
     public ResultTable() {
         pointsDAO = new SniperPointsDAO();
@@ -41,14 +41,17 @@ public class ResultTable {
     }
 
     public void clearTable() {
+        pointsDAO.clear();
         points = new ArrayList<>();
     }
 
     public void add() {
-        curR = point.getRadius();
-        Point handledPoint = getHandledPoint();
-        if (pointsDAO.addPoint(handledPoint)) {
-            points.add(handledPoint);
+        if (checkPointFields()) {
+            curR = point.getRadius().toString();
+            Point handledPoint = getHandledPoint();
+            if (pointsDAO.addPoint(handledPoint)) {
+                points.add(handledPoint);
+            }
         }
     }
 
@@ -63,5 +66,24 @@ public class ResultTable {
         service.handle();
         PointValidator.validate(curPoint);
         return curPoint;
+    }
+
+    private boolean checkPointFields() {
+        return point != null && this.point.getX() != null &&
+                this.point.getY() != null &&
+                this.point.getRadius() != null;
+    }
+
+    public String getCurR() {
+        try {
+            if (curR != null) {
+                Double.parseDouble(curR);
+                return curR;
+            } else {
+                return "R";
+            }
+        } catch (NumberFormatException e) {
+            return "R";
+        }
     }
 }

@@ -1,6 +1,6 @@
-<div class="result" styleClass="result-table" xmlns:h="http://java.sun.com/jsf/html"
+<div id="resultTable" class="result" styleClass="result-table" xmlns:h="http://java.sun.com/jsf/html"
      xmlns:f="http://java.sun.com/jsf/core">
-    <h:dataTable value="#{resultTable.points}" rows="5" var="row">
+    <h:dataTable value="#{resultTable.points}" var="row">
         <h:column>
             <f:facet name="header">X val</f:facet>
             <h:outputText value="#{row.x}"/>

@@ -2,16 +2,16 @@ const radius = 150
 const shift = 25
 
 function getDot() {
-    const rVal = +localStorage.getItem('rVal')
+    const rVal = localStorage.getItem('rVal')
     localStorage.removeItem('rVal')
     const coordinates = getCoordinates(rVal)
     const xVal = coordinates.xVal
     const yVal = coordinates.yVal
 
-    if (rVal == null || isNaN(rVal) || rVal < 1 || rVal > 5) {
+    if (rVal == null || isNaN(+rVal) || +rVal < 1 || +rVal > 5) {
         alertR()
     } else if (xVal <= 3 && xVal >= -5 && yVal >= -3 && yVal <= 5) {
-        sendRequest(xVal, yVal, rVal);
+        sendRequest(xVal, yVal, +rVal);
     } else {
         if (xVal < -5 || xVal > 3) {
             alertX()

@@ -15,34 +15,38 @@
 
     <h3>Y value:</h3>
     <h:inputText value="#{point.y}" id="y-input" styleClass="text-input" maxlength="6" alt="(2;5)" size="13"/>
+    <h:inputText style="display: none" value="#{point.radius}" id="r-input"/>
     <h3>Radius:</h3>
     <table class="r-table" id="radius-table">
         <tbody>
         <tr>
             <td><label>
-                <h:commandLink value="1" type="button" partialSubmit="true" action="#{point.initRadius(1.0)}"
-                               onclick="initR(1.0)">
+                <h:commandLink value="1" type="button" partialSubmit="true" onclick="initR(1.0)">
                     <f:ajax/>
                 </h:commandLink>
             </label></td>
+
             <td><label>
-                <h:commandLink value="2" type="button" partialSubmit="true" action="#{point.initRadius(2.0)}"
-                               onclick="initR(2.0)"> <f:ajax/>
+                <h:commandLink value="2" type="button" partialSubmit="true" onclick="initR(2.0)">
+                    <f:ajax/>
                 </h:commandLink>
             </label></td>
+
             <td><label>
-                <h:commandLink value="3" type="button" partialSubmit="true" action="#{point.initRadius(3.0)}"
-                               onclick="initR(3.0)"> <f:ajax/>
+                <h:commandLink value="3" type="button" partialSubmit="true" onclick="initR(3.0)">
+                    <f:ajax/>
                 </h:commandLink>
             </label></td>
+
             <td><label>
-                <h:commandLink value="4" type="button" partialSubmit="true" action="#{point.initRadius(4.0)}"
-                               onclick="initR(4.0)"> <f:ajax/>
+                <h:commandLink value="4" type="button" partialSubmit="true" onclick="initR(4.0)">
+                    <f:ajax/>
                 </h:commandLink>
             </label></td>
+
             <td><label>
-                <h:commandLink value="5" type="button" partialSubmit="true" action="#{point.initRadius(5.0)}"
-                               onclick="initR(5.0)"> <f:ajax/>
+                <h:commandLink value="5" type="button" partialSubmit="true" onclick="initR(5.0)">
+                    <f:ajax/>
                 </h:commandLink>
             </label></td>
         </tr>
@@ -51,10 +55,9 @@
 
     <div class="action-buttons">
         <h:commandButton styleClass="action-button" type="submit" name="check" value="Check"
-                         action="#{resultTable.add}"
-                         disabled="false" onclick="validate()"/>
-
+                         action="#{resultTable.add}" onclick="validate()"/>
         <h:commandButton styleClass="action-button" type="submit" name="clear" value="Clear"
-                         action="#{resultTable.clearTable}"/>
+                         action="#{resultTable.clearTable}" onclick="clearTable()">
+        </h:commandButton>
     </div>
 </h:form>

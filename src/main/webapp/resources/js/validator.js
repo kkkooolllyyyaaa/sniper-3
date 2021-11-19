@@ -3,7 +3,6 @@ const form_name = 'j_idt21'
 function validate() {
     const yVal = document.forms[form_name].elements[2].value
     const rVal = localStorage.getItem('rVal')
-    localStorage.removeItem('rVal')
     if (isEmpty(yVal)) {
         alertY()
     } else if (isEmpty(rVal) || rVal == null) {
@@ -17,13 +16,8 @@ function validate() {
     }
 }
 
-function initR(radius) {
-    localStorage.removeItem('rVal')
-    localStorage.setItem('rVal', radius)
-}
-
 function alertX() {
-    alert('X must be number in range [-5; 3]');
+    alert('X must be number in range [-5; 3]')
 }
 
 function alertY() {
@@ -46,3 +40,22 @@ function isEmpty(obj) {
     }
     return true
 }
+
+function initR(radius) {
+    const radiusId = 'j_idt21:r-input'
+    document.getElementById(radiusId).value = radius
+    localStorage.setItem('rVal', radius)
+    displayR(radius)
+}
+
+function displayR(radius) {
+    document.getElementById('Rx').textContent = radius
+    document.getElementById('-Rx').textContent = radius
+    document.getElementById('Ry').textContent = radius
+    document.getElementById('-Ry').textContent = radius
+}
+
+function clearTable() {
+    document.forms[form_name].elements[2].value = ''
+}
+
