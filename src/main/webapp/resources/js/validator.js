@@ -1,61 +1,38 @@
-const form_name = 'j_idt21'
+const FORM_NAME = 'j_idt24'
+const RECOVER_TIMEOUT = 500
+const Alerter = {
+    X_TEXT: 'X must be number in range [-5; 3]',
+    Y_TEXT: 'Y must be integer number in range [-3; 5]',
+    R_TEXT: 'Choose R, must be number in {1, 2, 3, 4, 5}',
+    ALERT_COLOR: 'red',
+    RECOVER_COLOR: 'inherit',
+    alertX: () => alert(Alerter.X_TEXT),
+    alertY: () => {
+        document.forms[FORM_NAME].elements[2].style.background = Alerter.ALERT_COLOR
+        alert(Alerter.Y_TEXT)
+        setTimeout(recoverY, RECOVER_TIMEOUT)
+    },
+    alertR: () => {
+        document.getElementById('radius-table').style.backgroundColor = Alerter.ALERT_COLOR
+        alert(Alerter.R_TEXT)
+        setTimeout(recoverR, RECOVER_TIMEOUT)
+    }
+}
 
 function validate() {
-    const yVal = document.forms[form_name].elements[2].value
+    const yVal = document.forms[FORM_NAME].elements[2].value
     const rVal = localStorage.getItem('rVal')
-    if (isEmpty(yVal)) {
-        alertY()
-    } else if (isEmpty(rVal) || rVal == null) {
-        alertR()
-    } else {
-        if (isNaN(yVal) || yVal < -3 || yVal > 5) {
-            alertY()
-        } else if (isNaN(+rVal) || +rVal < 1 || +rVal > 5) {
-            alertR()
-        }
+    if (validateR(rVal)) {
+        Alerter.alertR()
+    } else if (isEmpty(yVal) || validateY(yVal)) {
+        Alerter.alertY()
     }
 }
 
-function alertX() {
-    alert('X must be number in range [-5; 3]')
-}
+recoverY = () => document.forms[FORM_NAME].elements[2].style.background = Alerter.RECOVER_COLOR
 
-function alertY() {
-    document.forms[form_name].elements[2].style.background = 'red'
-    alert('Y must be integer number in range [-3; 5]')
-}
+recoverR = () => document.getElementById('radius-table').style.backgroundColor = Alerter.RECOVER_COLOR
 
-function alertR() {
-    const links = document.getElementsByTagName('a')
-    for (let i = 0; i < links.length; ++i) {
-        if (links.item(i).getAttribute('type') === 'button')
-            links.item(i).style.background = 'red'
-    }
-    alert('Choose R, must be number in {1, 2, 3 , 4, 5}')
-}
-
-function isEmpty(obj) {
-    for (let key in obj) {
-        return false
-    }
-    return true
-}
-
-function initR(radius) {
-    const radiusId = 'j_idt21:r-input'
-    document.getElementById(radiusId).value = radius
-    localStorage.setItem('rVal', radius)
-    displayR(radius)
-}
-
-function displayR(radius) {
-    document.getElementById('Rx').textContent = radius
-    document.getElementById('-Rx').textContent = radius
-    document.getElementById('Ry').textContent = radius
-    document.getElementById('-Ry').textContent = radius
-}
-
-function clearTable() {
-    document.forms[form_name].elements[2].value = ''
-}
-
+validateX = (xVal) => xVal == null || isNaN(xVal) || xVal < -5 || xVal > 3
+validateY = (yVal) => yVal == null || isNaN(yVal) || yVal < -3 || yVal > 5
+validateR = (rVal) => rVal == null || isNaN(+rVal) || +rVal < 1 || +rVal > 5

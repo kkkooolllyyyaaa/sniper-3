@@ -1,0 +1,8 @@
+<h:form name="svgForm" xmlns:h="http://java.sun.com/jsf/html" style="display: none">
+
+    <h:inputText value="#{point.x}" id="x-svg"/>
+    <h:inputText value="#{point.y}" id="y-svg"/>
+    <h:inputText value="#{point.radius}" id="r-svg"/>
+
+    <h:commandButton type="submit" action="#{resultTable.add}"/>
+</h:form>

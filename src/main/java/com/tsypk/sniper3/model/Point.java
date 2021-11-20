@@ -50,8 +50,4 @@ public class Point implements Serializable {
     @Column(nullable = false, name = "time")
     @Size(min = 19, max = 19)
     private String time;
-
-    public void initRadius(double radius) {
-        this.radius = radius;
-    }
 }

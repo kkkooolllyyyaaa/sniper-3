@@ -55,6 +55,19 @@ public class ResultTable {
         }
     }
 
+    public String getCurR() {
+        try {
+            if (curR != null) {
+                Double.parseDouble(curR);
+                return curR;
+            } else {
+                return "R";
+            }
+        } catch (NumberFormatException e) {
+            return "R";
+        }
+    }
+
     private Point getHandledPoint() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
         Point curPoint = Point.builder()
@@ -72,18 +85,5 @@ public class ResultTable {
         return point != null && this.point.getX() != null &&
                 this.point.getY() != null &&
                 this.point.getRadius() != null;
-    }
-
-    public String getCurR() {
-        try {
-            if (curR != null) {
-                Double.parseDouble(curR);
-                return curR;
-            } else {
-                return "R";
-            }
-        } catch (NumberFormatException e) {
-            return "R";
-        }
     }
 }

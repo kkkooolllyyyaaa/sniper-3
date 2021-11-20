@@ -15,8 +15,9 @@
 
     <h3>Y value:</h3>
     <h:inputText value="#{point.y}" id="y-input" styleClass="text-input" maxlength="6" alt="(2;5)" size="13"/>
-    <h:inputText style="display: none" value="#{point.radius}" id="r-input"/>
+
     <h3>Radius:</h3>
+    <h:inputText style="display: none" value="#{point.radius}" id="r-input"/>
     <table class="r-table" id="radius-table">
         <tbody>
         <tr>
@@ -54,10 +55,10 @@
     </table>
 
     <div class="action-buttons">
-        <h:commandButton styleClass="action-button" type="submit" name="check" value="Check"
+        <h:commandButton styleClass="action-button" type="submit" value="Check"
                          action="#{resultTable.add}" onclick="validate()"/>
-        <h:commandButton styleClass="action-button" type="submit" name="clear" value="Clear"
-                         action="#{resultTable.clearTable}" onclick="clearTable()">
-        </h:commandButton>
+
+        <h:commandButton styleClass="action-button" type="submit" value="Clear"
+                         action="#{resultTable.clearTable}" onclick="clearTable()"/>
     </div>
 </h:form>

@@ -1,48 +1,38 @@
-const radius = 150
-const shift = 25
+const SVG_RADIUS = 150
+const SVG_SHIFT = 25
+const SVG_FORM_NAME = 'j_idt22'
 
 function getDot() {
     const rVal = localStorage.getItem('rVal')
-    localStorage.removeItem('rVal')
-    const coordinates = getCoordinates(rVal)
+    const coordinates = getFromSVG(rVal)
     const xVal = coordinates.xVal
     const yVal = coordinates.yVal
 
-    if (rVal == null || isNaN(+rVal) || +rVal < 1 || +rVal > 5) {
-        alertR()
-    } else if (xVal <= 3 && xVal >= -5 && yVal >= -3 && yVal <= 5) {
-        sendRequest(xVal, yVal, +rVal);
+    if (validateR(rVal)) {
+        Alerter.alertR()
+    } else if (validateX(xVal)) {
+        Alerter.alertX()
+    } else if (validateY(yVal)) {
+        Alerter.alertY()
     } else {
-        if (xVal < -5 || xVal > 3) {
-            alertX()
-        } else if (yVal < -3 || yVal > 5) {
-            alertY()
-        }
+        sendRequest(xVal, yVal, rVal)
     }
 }
 
 function sendRequest(x, y, r) {
-    console.log(x, y, r);
-    // let http = new XMLHttpRequest();
-    // const main = 'http://localhost:8080/sniper-3-1.0-SNAPSHOT';
-    // const page = '/controller-servlet';
-    // const params = '?x=' + x.toString() + '&y=' + y + '&r=' + r.toString() + '&' + 'check=dotCheck';
-    // let url = main + page + params;
-    // localStorage.setItem('rVal', r);
-    // http.onload = function () {
-    //     document.location.href = 'main.xhtml';
-    // };
-    // http.open('GET', url, true);
-    // http.send();
+    document.forms[SVG_FORM_NAME][1].value = x
+    document.forms[SVG_FORM_NAME][2].value = y
+    document.forms[SVG_FORM_NAME][3].value = r
+    document.forms[SVG_FORM_NAME][4].click()
 }
 
-function getCoordinates(rVal) {
-    const svgArea = document.getElementById("area-graph");
+function getFromSVG(rVal) {
+    const svgArea = document.getElementById('area-graph');
     let rect = svgArea.getBoundingClientRect();
     let yCor = (event.clientY - rect.top);
     let xCor = (event.clientX - rect.left);
-    const xVal = Math.floor(((xCor - (radius + shift)) / radius * rVal) * 100) / 100;
-    const yVal = -Math.floor(((yCor - (radius + shift)) / radius * rVal) * 100) / 100;
+    const xVal = Math.floor(((xCor - (SVG_RADIUS + SVG_SHIFT)) / SVG_RADIUS * rVal) * 100) / 100;
+    const yVal = -Math.floor(((yCor - (SVG_RADIUS + SVG_SHIFT)) / SVG_RADIUS * rVal) * 100) / 100;
     return {
         xVal: xVal,
         yVal: yVal
