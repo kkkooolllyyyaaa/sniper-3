@@ -1,4 +1,4 @@
 # Project exclude paths
 /target/
-/.idea
-/sniper-3.iml
+.idea
+*.iml
