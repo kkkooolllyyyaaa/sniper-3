@@ -3,7 +3,6 @@ package com.tsypk.sniper3.model;
 import com.tsypk.sniper3.database.PointsDAO;
 import com.tsypk.sniper3.database.SniperPointsDAO;
 import com.tsypk.sniper3.utils.PointService;
-import com.tsypk.sniper3.utils.PointValidator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,9 +48,8 @@ public class ResultTable {
         if (checkPointFields()) {
             curR = point.getRadius().toString();
             Point handledPoint = getHandledPoint();
-            if (pointsDAO.addPoint(handledPoint)) {
+            if (pointsDAO.addPoint(handledPoint))
                 points.add(handledPoint);
-            }
         }
     }
 
@@ -77,7 +75,6 @@ public class ResultTable {
                 .time((dateFormat.format(new Date(System.currentTimeMillis())))).build();
         PointService service = new PointService(curPoint);
         service.handle();
-        PointValidator.validate(curPoint);
         return curPoint;
     }
 

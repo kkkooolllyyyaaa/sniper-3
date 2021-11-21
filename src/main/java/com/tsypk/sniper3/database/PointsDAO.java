@@ -15,6 +15,6 @@ public interface PointsDAO {
 
     ArrayList<Point> head(int count);
 
-    boolean clear();
+    void clear();
 
 }

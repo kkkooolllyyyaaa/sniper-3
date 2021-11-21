@@ -14,10 +14,3 @@ function displayR(radius) {
 }
 
 clearTable = () => document.forms[FORM_NAME].elements[2].value = ''
-
-function isEmpty(obj) {
-    for (let key in obj) {
-        return false
-    }
-    return true
-}

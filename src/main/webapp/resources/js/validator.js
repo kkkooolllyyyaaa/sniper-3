@@ -24,7 +24,7 @@ function validate() {
     const rVal = localStorage.getItem('rVal')
     if (validateR(rVal)) {
         Alerter.alertR()
-    } else if (isEmpty(yVal) || validateY(yVal)) {
+    } else if (validateY(yVal)) {
         Alerter.alertY()
     }
 }
@@ -34,5 +34,5 @@ recoverY = () => document.forms[FORM_NAME].elements[2].style.background = Alerte
 recoverR = () => document.getElementById('radius-table').style.backgroundColor = Alerter.RECOVER_COLOR
 
 validateX = (xVal) => xVal == null || isNaN(xVal) || xVal < -5 || xVal > 3
-validateY = (yVal) => yVal == null || isNaN(yVal) || yVal < -3 || yVal > 5
+validateY = (yVal) => yVal == null || yVal === '' || isNaN(yVal) || yVal < -3 || yVal > 5
 validateR = (rVal) => rVal == null || isNaN(+rVal) || +rVal < 1 || +rVal > 5

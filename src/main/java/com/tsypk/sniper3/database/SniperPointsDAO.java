@@ -69,15 +69,14 @@ public class SniperPointsDAO implements PointsDAO {
     }
 
     @Override
-    public boolean clear() {
+    public void clear() {
         try {
             em.getTransaction().begin();
             Query query = em.createQuery("delete FROM Point");
             query.executeUpdate();
             em.getTransaction().commit();
-            return true;
-        } catch (Exception e) {
-            return false;
+        } catch (Exception unexpected) {
+            unexpected.printStackTrace();
         }
     }
 }
