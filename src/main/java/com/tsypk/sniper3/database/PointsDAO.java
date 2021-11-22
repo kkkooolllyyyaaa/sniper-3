@@ -2,7 +2,7 @@ package com.tsypk.sniper3.database;
 
 import com.tsypk.sniper3.model.Point;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author tsypk on 11.11.2021 04:27
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 public interface PointsDAO {
     boolean addPoint(Point point);
 
-    ArrayList<Point> getAll();
+    List<Point> getAll();
 
-    ArrayList<Point> head(int count);
+    List<Point> head(int count);
 
     void clear();
 

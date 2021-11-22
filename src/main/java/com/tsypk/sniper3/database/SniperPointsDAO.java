@@ -23,43 +23,40 @@ public class SniperPointsDAO implements PointsDAO {
     @Override
     public boolean addPoint(Point point) {
         try {
-            em.getTransaction().begin();
-            em.merge(point);
-            em.getTransaction().commit();
+            begin();
+            em.persist(point);
+            em.flush();
+            end();
             return true;
         } catch (Exception e) {
-            if (em == null) {
-                System.out.println("null");
-            }
             em.getTransaction().rollback();
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
 
     @Override
-    public ArrayList<Point> getAll() {
+    public List<Point> getAll() {
         try {
-            em.getTransaction().begin();
-            List resultList = em.createQuery("SELECT point FROM Point point")
-                    .getResultList();
-            em.getTransaction().commit();
-            return (ArrayList<Point>) resultList;
+            begin();
+            @SuppressWarnings("unchecked")
+            List<Point> resultList = em.createQuery("SELECT point FROM Point point").getResultList();
+            end();
+            return resultList;
         } catch (Exception e) {
             return new ArrayList<>();
         }
     }
 
     @Override
-    public ArrayList<Point> head(int count) {
+    public List<Point> head(int count) {
         if (count > 0) {
             try {
-                em.getTransaction().begin();
-                List resultList = em.createQuery("SELECT point FROM Point point")
-                        .setMaxResults(count)
-                        .getResultList();
-                em.getTransaction().commit();
-                return (ArrayList<Point>) resultList;
+                begin();
+                @SuppressWarnings("unchecked")
+                List<Point> resultList = em.createQuery("SELECT point FROM Point point").setMaxResults(count).getResultList();
+                end();
+                return resultList;
             } catch (Exception e) {
                 return new ArrayList<>();
             }
@@ -71,12 +68,24 @@ public class SniperPointsDAO implements PointsDAO {
     @Override
     public void clear() {
         try {
-            em.getTransaction().begin();
+            begin();
             Query query = em.createQuery("delete FROM Point");
             query.executeUpdate();
-            em.getTransaction().commit();
+            end();
         } catch (Exception unexpected) {
             unexpected.printStackTrace();
+        }
+    }
+
+    private void begin() {
+        em.getTransaction().begin();
+    }
+
+    private void end() {
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().commit();
+        } else {
+            throw new RuntimeException("Inactive transaction");
         }
     }
 }

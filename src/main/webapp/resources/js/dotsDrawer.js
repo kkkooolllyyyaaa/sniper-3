@@ -13,7 +13,7 @@ const dotsDrawer = {
             const y = values[i + 1].innerHTML
             const r = getRVal()
             const res = values[i + 4].innerHTML
-            if (!isEmpty(x) && !isEmpty(y) && !isEmpty(res))
+            if (!isEmpty(x) && !isEmpty(y) && !isEmpty(res) && !isEmpty(r))
                 dotsDrawer.drawOneDot(+x, +y, r, res)
         }
     },
