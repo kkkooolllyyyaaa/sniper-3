@@ -1,9 +1,10 @@
-function initR(radius) {
-    const radiusId = FORM_NAME + ':r-input'
-    document.getElementById(radiusId).value = radius
-    localStorage.setItem('rVal', radius)
-    displayR(radius)
-    drawDots()
+const FORM_NAME = 'j_idt24'
+
+function initR(r) {
+    getHiddenRInput().value = r
+    setRVal(r)
+    displayR(r)
+    dotsDrawer.drawDots()
 }
 
 function displayR(radius) {
@@ -14,3 +15,13 @@ function displayR(radius) {
 }
 
 clearTable = () => document.forms[FORM_NAME].elements[2].value = ''
+
+isEmpty = (temp) => temp === ''
+
+setRVal = (r) => localStorage.setItem('rVal', r)
+getRVal = () => localStorage.getItem('rVal')
+
+getXInput = () => document.forms[FORM_NAME].elements[1]
+getYInput = () => document.forms[FORM_NAME].elements[2]
+getRInput = () => document.getElementById('radius-table')
+getHiddenRInput = () => document.getElementById(FORM_NAME + ':r-input')

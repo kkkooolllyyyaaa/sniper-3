@@ -10,14 +10,13 @@
         <properties>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres"/>
-<!--            <property name="hibernate.hbm2ddl.auto" value="none"/>-->
+            <!--            <property name="hibernate.hbm2ddl.auto" value="none"/>-->
             <property name="hibernate.connection.username" value="postgres"/>
             <property name="hibernate.connection.password" value="postgres"/>
             <!--            <property name="hibernate.connection.url" value="jdbc:postgresql://pg:5432/studs"/>-->
             <!--            <property name="hibernate.connection.username" value="s311690"/>-->
             <!--            <property name="hibernate.connection.password" value="pdw855"/>-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
-            <!--        Echo all executed SQL to stdout -->
             <property name="show_sql" value="true"/>
             <property name="format_sql" value="true"/>
         </properties>

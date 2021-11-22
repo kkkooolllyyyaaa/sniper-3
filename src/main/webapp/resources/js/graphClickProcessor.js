@@ -3,18 +3,11 @@ const SVG_SHIFT = 25
 const SVG_FORM_NAME = 'j_idt22'
 
 function getDot() {
-    const rVal = localStorage.getItem('rVal')
+    const rVal = getRVal()
     const coordinates = getFromSVG(rVal)
     const xVal = coordinates.xVal
     const yVal = coordinates.yVal
-
-    if (validateR(rVal)) {
-        Alerter.alertR()
-    } else if (validateX(xVal)) {
-        Alerter.alertX()
-    } else if (validateY(yVal)) {
-        Alerter.alertY()
-    } else {
+    if (validateAll(xVal, yVal, rVal)) {
         sendRequest(xVal, yVal, rVal)
     }
 }
@@ -27,16 +20,24 @@ function sendRequest(x, y, r) {
 }
 
 function getFromSVG(rVal) {
-    const svgArea = document.getElementById('area-graph');
-    let rect = svgArea.getBoundingClientRect();
-    let yCor = (event.clientY - rect.top);
-    let xCor = (event.clientX - rect.left);
-    const xVal = Math.floor(((xCor - (SVG_RADIUS + SVG_SHIFT)) / SVG_RADIUS * rVal) * 100) / 100;
-    const yVal = -Math.floor(((yCor - (SVG_RADIUS + SVG_SHIFT)) / SVG_RADIUS * rVal) * 100) / 100;
+    const svgArea = getSVG()
+    const rect = svgArea.getBoundingClientRect()
+    const yCor = (event.clientY - rect.top)
+    const xCor = (event.clientX - rect.left)
+    const xVal = SVGtoX(xCor, rVal)
+    const yVal = SVGtoY(yCor, rVal)
     return {
         xVal: xVal,
         yVal: yVal
     }
 }
 
-document.getElementById('area-graph').onclick = getDot;
+getSVG = () => document.getElementById('area-graph')
+
+xToSVG = (x, r) => x / r * SVG_RADIUS + (SVG_RADIUS + SVG_SHIFT)
+yToSVG = (y, r) => -y / r * SVG_RADIUS + (SVG_RADIUS + SVG_SHIFT)
+
+SVGtoX = (xCor, rVal) => Math.floor(((xCor - (SVG_RADIUS + SVG_SHIFT)) / SVG_RADIUS * rVal) * 100) / 100
+SVGtoY = (yCor, rVal) => -Math.floor(((yCor - (SVG_RADIUS + SVG_SHIFT)) / SVG_RADIUS * rVal) * 100) / 100
+
+getSVG().onclick = getDot;
