@@ -15,10 +15,15 @@ import java.util.List;
  * @project sniper-3
  */
 public class SniperPointsDAO implements PointsDAO {
-    private final EntityManagerFactory entityManagerFactory = Persistence.
-            createEntityManagerFactory(PropertyManager.getProperty("persistence-unit"));
+    private final EntityManager em;
 
-    private final EntityManager em = entityManagerFactory.createEntityManager();
+    public SniperPointsDAO() {
+        PortForwarder.connect();
+
+        EntityManagerFactory entityManagerFactory = Persistence.
+                createEntityManagerFactory(PropertyManager.getProperty("persistence-unit"));
+        em = entityManagerFactory.createEntityManager();
+    }
 
     @Override
     public boolean addPoint(Point point) {

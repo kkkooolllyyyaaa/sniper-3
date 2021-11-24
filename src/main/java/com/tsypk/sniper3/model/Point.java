@@ -30,7 +30,7 @@ import java.io.Serializable;
 @ToString
 public class Point implements Serializable {
     @Id
-    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "points_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     private Integer id;
     @Column(nullable = false, name = "x")

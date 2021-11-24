@@ -9,6 +9,7 @@ import java.util.Properties;
  * @project sniper-3
  */
 public class PropertyManager {
+
     public static String getProperty(String propertyName) {
         try {
             Properties properties = new Properties();
