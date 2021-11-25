@@ -9,14 +9,20 @@ import java.util.Properties;
  * @project sniper-3
  */
 public class PropertyManager {
+    private final static String configFolder = "jboss.server.config.dir";
+    private final static String propertyFile = "app.properties";
+    private final static String localPropertyFile = "/Users/tsypk/IdeaProjects/sniper-3/src/main/resources/app.properties";
 
     public static String getProperty(String propertyName) {
+        Properties properties = new Properties();
+        FileInputStream fis;
+        String absPath = System.getProperty(configFolder);
         try {
-            Properties properties = new Properties();
-            FileInputStream fis = new FileInputStream("src/main/resources/app.properties");
+            fis = new FileInputStream(absPath.concat("/").concat(propertyFile));
             properties.load(fis);
             return properties.getProperty(propertyName);
         } catch (IOException unexpected) {
+            unexpected.printStackTrace();
             return null;
         }
     }

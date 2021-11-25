@@ -9,6 +9,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 
 /**
  * @author tsypk on 11.11.2021 04:05
@@ -30,7 +31,7 @@ import java.io.Serializable;
 @ToString
 public class Point implements Serializable {
     @Id
-    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "points_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     private Integer id;
     @Column(nullable = false, name = "x")

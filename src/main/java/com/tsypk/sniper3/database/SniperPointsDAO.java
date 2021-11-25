@@ -1,6 +1,7 @@
 package com.tsypk.sniper3.database;
 
 import com.tsypk.sniper3.model.Point;
+import com.tsypk.sniper3.utils.PortForwarder;
 import com.tsypk.sniper3.utils.PropertyManager;
 
 import javax.persistence.EntityManager;
@@ -19,7 +20,6 @@ public class SniperPointsDAO implements PointsDAO {
 
     public SniperPointsDAO() {
         PortForwarder.connect();
-
         EntityManagerFactory entityManagerFactory = Persistence.
                 createEntityManagerFactory(PropertyManager.getProperty("persistence-unit"));
         em = entityManagerFactory.createEntityManager();

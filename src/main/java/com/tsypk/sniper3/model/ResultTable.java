@@ -11,9 +11,14 @@ import lombok.ToString;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author tsypk on 11.11.2021 04:26
@@ -31,11 +36,12 @@ public class ResultTable {
     private PointsDAO pointsDAO;
     @Inject
     private Point point;
-    private Point svgPoint;
+    private Validator validator;
 
     public ResultTable() {
         pointsDAO = new SniperPointsDAO();
         points = (ArrayList<Point>) pointsDAO.getAll();
+        initValidator();
     }
 
     public void clearTable() {
@@ -44,10 +50,13 @@ public class ResultTable {
     }
 
     public void add() {
-        if (checkPointFields()) {
+        if (checkFields()) {
             Point handledPoint = getHandledPoint();
-            if (pointsDAO.addPoint(handledPoint))
-                points.add(handledPoint);
+            Set<ConstraintViolation<Point>> violations = validator.validate(point);
+            if (violations.size() == 0) {
+                if (pointsDAO.addPoint(handledPoint))
+                    points.add(handledPoint);
+            }
         }
     }
 
@@ -63,9 +72,12 @@ public class ResultTable {
         return curPoint;
     }
 
-    private boolean checkPointFields() {
-        return point != null && this.point.getX() != null &&
-                this.point.getY() != null &&
-                this.point.getRadius() != null;
+    private void initValidator() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
+
+    private boolean checkFields() {
+        return point != null && point.getX() != null && point.getY() != null && point.getRadius() != null;
     }
 }

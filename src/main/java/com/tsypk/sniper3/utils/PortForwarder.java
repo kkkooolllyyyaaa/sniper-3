@@ -1,9 +1,8 @@
-package com.tsypk.sniper3.database;
+package com.tsypk.sniper3.utils;
 
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-import com.tsypk.sniper3.utils.PropertyManager;
 
 import java.util.Objects;
 import java.util.Properties;
@@ -22,9 +21,9 @@ public class PortForwarder {
     private static int remotePort;
     private static int localPort;
 
-    public static boolean connect() {
+    public static void connect() {
         initFields();
-        return doSshTunnel();
+        doSshTunnel();
     }
 
     private static boolean doSshTunnel() {
@@ -48,10 +47,9 @@ public class PortForwarder {
         sshUser = PropertyManager.getProperty("sshUser");
         sshPassword = PropertyManager.getProperty("sshPassword");
         sshHost = PropertyManager.getProperty("sshHost");
-        String strSshPort = PropertyManager.getProperty("sshPortNumber");
-        sshPort = Integer.parseInt(strSshPort);
+        sshPort = Integer.parseInt(Objects.requireNonNull(PropertyManager.getProperty("sshPortNumber")));
         remoteHost = PropertyManager.getProperty("remoteHost");
-        remotePort = Integer.parseInt(PropertyManager.getProperty("remotePort"));
+        remotePort = Integer.parseInt(Objects.requireNonNull(PropertyManager.getProperty("remotePort")));
         localPort = Integer.parseInt(Objects.requireNonNull(PropertyManager.getProperty("localPort")));
     }
 }
