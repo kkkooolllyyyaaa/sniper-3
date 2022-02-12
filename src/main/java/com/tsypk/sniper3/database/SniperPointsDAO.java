@@ -7,7 +7,6 @@ import com.tsypk.sniper3.utils.PropertyManager;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +30,7 @@ public class SniperPointsDAO implements PointsDAO {
             begin();
             em.persist(point);
             em.flush();
+            em.clear();
             end();
             return true;
         } catch (Exception e) {
@@ -74,23 +74,25 @@ public class SniperPointsDAO implements PointsDAO {
     public void clear() {
         try {
             begin();
-            Query query = em.createQuery("delete FROM Point");
-            query.executeUpdate();
+            em.createQuery("delete FROM Point").executeUpdate();
             end();
         } catch (Exception unexpected) {
             unexpected.printStackTrace();
+            System.exit(1);
         }
     }
 
     private void begin() {
-        em.getTransaction().begin();
+        if (!em.getTransaction().isActive())
+            em.getTransaction().begin();
+        else
+            throw new RuntimeException("Active transaction for [em.getTransaction.begin()]");
     }
 
     private void end() {
-        if (em.getTransaction().isActive()) {
+        if (em.getTransaction().isActive())
             em.getTransaction().commit();
-        } else {
-            throw new RuntimeException("Inactive transaction");
-        }
+        else
+            throw new RuntimeException("Inactive transaction for [em.getTransaction().commit()]");
     }
 }

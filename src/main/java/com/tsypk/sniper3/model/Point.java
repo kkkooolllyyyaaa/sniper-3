@@ -9,7 +9,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 
 /**
  * @author tsypk on 11.11.2021 04:05
