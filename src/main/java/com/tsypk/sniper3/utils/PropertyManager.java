@@ -11,7 +11,6 @@ import java.util.Properties;
 public class PropertyManager {
     private final static String configFolder = "jboss.server.config.dir";
     private final static String propertyFile = "app.properties";
-    private final static String localPropertyFile = "/Users/tsypk/IdeaProjects/sniper-3/src/main/resources/app.properties";
 
     public static String getProperty(String propertyName) {
         Properties properties = new Properties();
