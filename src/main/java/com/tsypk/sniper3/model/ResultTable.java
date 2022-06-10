@@ -50,13 +50,13 @@ public class ResultTable {
     }
 
     public void add() {
-        if (checkFields()) {
-            Point handledPoint = getHandledPoint();
-            Set<ConstraintViolation<Point>> violations = validator.validate(point);
-            if (violations.size() == 0) {
-                if (pointsDAO.addPoint(handledPoint))
-                    points.add(handledPoint);
-            }
+        if (!checkFields())
+            return;
+
+        Point handledPoint = getHandledPoint();
+        Set<ConstraintViolation<Point>> violations = validator.validate(point);
+        if (violations.size() == 0 && pointsDAO.addPoint(handledPoint)) {
+            points.add(handledPoint);
         }
     }
 
