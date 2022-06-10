@@ -26,7 +26,7 @@ public class PortForwarder {
         doSshTunnel();
     }
 
-    private static boolean doSshTunnel() {
+    private static void doSshTunnel() {
         try {
             JSch jsch = new JSch();
             Session session = jsch.getSession(sshUser, sshHost, sshPort);
@@ -36,10 +36,8 @@ public class PortForwarder {
             session.setConfig(config);
             session.connect();
             session.setPortForwardingL(localPort, remoteHost, remotePort);
-            return true;
         } catch (JSchException unexpected) {
             unexpected.printStackTrace();
-            return false;
         }
     }
 
