@@ -1,0 +1,51 @@
+<?xml version = "1.0"?>
+<project name="mispi-3" xmlns:ivy="antlib:org.apache.ivy.ant" default="build">
+    <property file="temps.properties"/>
+
+    <!--ivy resolve-->
+    <target name="resolve">
+        <ivy:retrieve/>
+    </target>
+
+    <!--compile-->
+    <target name="compile" depends="clean">
+        <mkdir dir="${build.classes}"/>
+        <javac includeantruntime="false" srcdir="${src}" destdir="${build.classes}">
+            <classpath path="lib">
+                <fileset dir="lib" includes="*.jar"/>
+            </classpath>
+        </javac>
+        <copy todir="${build.classes}">
+            <fileset dir="${resources}"/>
+        </copy>
+        <mkdir dir="${build}/webapp"/>
+        <copy todir="${build}/webapp">
+            <fileset dir="${webapp}"/>
+        </copy>
+    </target>
+
+    <!--build-->
+    <target name="build" depends="compile">
+        <jar destfile="${build}/${app.name}.jar" basedir="${build.classes}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Version" value="1.0.0"/>
+                <attribute name="Created-By" value="Kolya and Nurgun"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!--clean-->
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+
+    <!--xml-->
+    <target name="xml">
+        <xmlvalidate failonerror="false" lenient="true">
+            <fileset dir="." includes="**/*.xml" excludes=".idea/**/*.xml"/>
+        </xmlvalidate>
+    </target>
+
+</project>

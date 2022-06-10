@@ -17,9 +17,7 @@ import java.io.Serializable;
 @Named
 @RequestScoped
 @Entity
-@Table(name = "points", indexes = {
-        @Index(name = "idx_point_id", columnList = "id")
-})
+@Table(schema = "s311690", name = "points")
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +28,7 @@ import java.io.Serializable;
 @ToString
 public class Point implements Serializable {
     @Id
-    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "points_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     private Integer id;
     @Column(nullable = false, name = "x")

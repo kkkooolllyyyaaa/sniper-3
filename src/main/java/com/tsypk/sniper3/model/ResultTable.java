@@ -2,7 +2,8 @@ package com.tsypk.sniper3.model;
 
 import com.tsypk.sniper3.database.PointsDAO;
 import com.tsypk.sniper3.database.SniperPointsDAO;
-import com.tsypk.sniper3.utils.PointService;
+import com.tsypk.sniper3.graph.Graph;
+import com.tsypk.sniper3.graph.shapes.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import javax.validation.ValidatorFactory;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,19 +36,17 @@ import java.util.Set;
 public class ResultTable {
     private ArrayList<Point> points;
     private PointsDAO pointsDAO;
+    private Validator validator;
+    private Graph graph;
+
     @Inject
     private Point point;
-    private Validator validator;
 
     public ResultTable() {
         pointsDAO = new SniperPointsDAO();
-        points = (ArrayList<Point>) pointsDAO.getAll();
+        initPoints();
+        initGraph();
         initValidator();
-    }
-
-    public void clearTable() {
-        pointsDAO.clear();
-        points = new ArrayList<>();
     }
 
     public void add() {
@@ -60,16 +60,31 @@ public class ResultTable {
         }
     }
 
+    public void clearTable() {
+        pointsDAO.clear();
+        points.clear();
+    }
+
     private Point getHandledPoint() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
-        Point curPoint = Point.builder()
+        Date date = new Date(System.currentTimeMillis());
+        return Point.builder()
                 .x(point.getX())
                 .y(point.getY())
                 .radius(point.getRadius())
-                .time((dateFormat.format(new Date(System.currentTimeMillis())))).build();
-        PointService service = new PointService(curPoint);
-        service.handle();
-        return curPoint;
+                .result(graph.isHit(point))
+                .time((dateFormat.format(date))).build();
+    }
+
+    private boolean checkFields() {
+        return point != null && point.getX() != null && point.getY() != null && point.getRadius() != null;
+    }
+
+    private void initGraph() {
+        Shape topLeft = new Triangle(Radius.HALF_R, Radius.HALF_R);
+        Shape botRight = new Rectangle(Radius.R, Radius.R);
+        Shape topRight = new Circle(Radius.HALF_R);
+        graph = new Graph(topLeft, topRight, botRight, null);
     }
 
     private void initValidator() {
@@ -77,7 +92,8 @@ public class ResultTable {
         validator = factory.getValidator();
     }
 
-    private boolean checkFields() {
-        return point != null && point.getX() != null && point.getY() != null && point.getRadius() != null;
+    private void initPoints() {
+        List<Point> current = pointsDAO.getAll();
+        points = (ArrayList<Point>) current;
     }
 }
