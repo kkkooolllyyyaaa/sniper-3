@@ -10,9 +10,9 @@
     <!--compile-->
     <target name="compile" depends="clean">
         <mkdir dir="${build.classes}"/>
-        <javac includeantruntime="false" srcdir="${src}" destdir="${build.classes}">
-            <classpath path="lib">
-                <fileset dir="lib" includes="*.jar"/>
+        <javac srcdir="${src}" destdir="${build.classes}" includeantruntime="false">
+            <classpath path="${lib}">
+                <fileset dir="${lib}" includes="*.jar"/>
             </classpath>
         </javac>
         <copy todir="${build.classes}">
@@ -40,6 +40,30 @@
         <delete dir="build"/>
     </target>
 
+    <!--test-->
+    <target name="test" depends="build">
+        <mkdir dir="${build.tests}"/>
+        <javac srcdir="${src.test}" destdir="${build.tests}" includeantruntime="false">
+            <classpath path="${lib}">
+                <pathelement path="${build.classes}"/>
+                <fileset dir="${lib}" includes="*.jar"/>
+            </classpath>
+        </javac>
+
+        <junit printsummary="on">
+            <formatter type="brief" usefile="false"/>
+            <classpath>
+                <pathelement path="${junit}"/>
+                <pathelement path="${hamcrest}"/>
+                <pathelement path="${build.classes}"/>
+                <pathelement path="${build.tests}"/>
+            </classpath>
+            <test name="com.tsypk.sniper3.graph.shapes.CircleTest"/>
+            <test name="com.tsypk.sniper3.graph.shapes.RectangleTest"/>
+            <test name="com.tsypk.sniper3.graph.shapes.TriangleTest"/>
+            <test name="com.tsypk.sniper3.graph.GraphTest"/>
+        </junit>
+    </target>
 
     <!--xml-->
     <target name="xml">
