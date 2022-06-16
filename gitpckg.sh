@@ -1,14 +1,28 @@
 #!/bin/bash
 
 function prepare_commits() {
-  echo "" > commits.properties
-  for ((counter = 1; counter <= $1; counter++)); do
+  N=$1
+  ((N=N+1))
+  for ((counter = 2; counter <= $N; counter++)); do
     ARG="$counter""p"
-    COMMIT=$(git log | grep commit | head -$1 | awk '{print $2}' | sed -n $ARG)
+    COMMIT=$(git log | grep commit | head -$N | awk '{print $2}' | sed -n $ARG)
     echo commit$counter=$COMMIT >> 'commits.properties'
+
+    git checkout $COMMIT
+    git checkout master build.xml
+    git checkout master temp.properties
+    ant build
+
+    CUR_JAR=build/commit$counter.jar
+    mv build/mispi-3.jar $CUR_JAR
+
+    git stash push -a $CUR_JAR
   done
+  git checkout master
+  git stash pop
+  git stash pop
+  git stash pop
+  git stash pop
 }
 
-#touch commits.properties
-#prepare_commits $1
-ant build
+prepare_commits $1

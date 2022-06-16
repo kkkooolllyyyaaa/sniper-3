@@ -82,9 +82,7 @@
     (по аналогии с основной) и упаковку получившихся jar-файлов в zip-архив. Сборку реализовать посредством вызова цели build">
         <exec executable="/bin/bash">
             <arg value="gitpckg.sh"/>
-            <arg value="4"/>
+            <arg value="5"/>
         </exec>
-        <property file="commits.properties"/>
-        <echo message="${commit2}"/>
     </target>
 </project>
