@@ -1,14 +1,16 @@
 <?xml version = "1.0"?>
-<project name="mispi-3" xmlns:ivy="antlib:org.apache.ivy.ant" default="build">
+<project name="mispi-3" default="build">
+
+    <!--<project name="mispi-3" xmlns:ivy="antlib:org.apache.ivy.ant" default="build">-->
     <property file="temps.properties"/>
 
     <!--ivy resolve-->
-    <target name="resolve">
-        <ivy:retrieve/>
-    </target>
+    <!--    <target name="resolve">-->
+    <!--        <ivy:retrieve/>-->
+    <!--    </target>-->
 
     <!--compile-->
-    <target name="compile" depends="clean">
+    <target name="compile" depends="clean" description="компиляция исходных кодов проекта">
         <mkdir dir="${build.classes}"/>
         <javac srcdir="${src}" destdir="${build.classes}" includeantruntime="false">
             <classpath path="${lib}">
@@ -25,7 +27,8 @@
     </target>
 
     <!--build-->
-    <target name="build" depends="compile">
+    <target name="build" depends="compile" description="компиляция исходных кодов проекта и их упаковка в исполняемый jar-архив.
+    Компиляцию исходных кодов реализовать посредством вызова цели compile">
         <jar destfile="${build}/${app.name}.jar" basedir="${build.classes}">
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
@@ -36,12 +39,14 @@
     </target>
 
     <!--clean-->
-    <target name="clean">
+    <target name="clean"
+            description="удаление скомпилированных классов проекта и всех временных файлов (если они есть)">
         <delete dir="build"/>
     </target>
 
     <!--test-->
-    <target name="test" depends="build">
+    <target name="test" depends="build" description="запуск junit-тестов проекта. Перед запуском тестов необходимо
+    осуществить сборку проекта (цель build)">
         <mkdir dir="${build.tests}"/>
         <javac srcdir="${src.test}" destdir="${build.tests}" includeantruntime="false">
             <classpath path="${lib}">
@@ -67,9 +72,19 @@
 
     <!--xml-->
     <target name="xml">
-        <xmlvalidate failonerror="false" lenient="true">
+        <xmlvalidate failonerror="false" lenient="true" description="валидация всех xml-файлов в проекте">
             <fileset dir="." includes="**/*.xml" excludes=".idea/**/*.xml"/>
         </xmlvalidate>
     </target>
 
+    <!--team-->
+    <target name="team" description="осуществляет получение из git-репозитория 4 предыдущих ревизий, их сборку
+    (по аналогии с основной) и упаковку получившихся jar-файлов в zip-архив. Сборку реализовать посредством вызова цели build">
+        <exec executable="/bin/bash">
+            <arg value="gitpckg.sh"/>
+            <arg value="4"/>
+        </exec>
+        <property file="commits.properties"/>
+        <echo message="${commit2}"/>
+    </target>
 </project>
