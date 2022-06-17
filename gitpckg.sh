@@ -16,7 +16,7 @@ function prepare_commits() {
     CUR_JAR=build/commit$NUMBER.jar
     mv build/mispi-3.jar $CUR_JAR
 
-    git add $CUR_JAR
+    git add -f $CUR_JAR
     git stash save $CUR_JAR
   done
   git checkout master
