@@ -6,7 +6,7 @@ function prepare_commits() {
   for ((counter = 2; counter <= $N; counter++)); do
     ARG="$counter""p"
     COMMIT=$(git log | grep commit | head -$N | awk '{print $2}' | sed -n $ARG)
-
+    echo $COMMIT
     git checkout $COMMIT
     git checkout master build.xml
     git checkout master temps.properties
@@ -18,7 +18,6 @@ function prepare_commits() {
 
     git add $CUR_JAR
     git stash save $CUR_JAR
-    git restore --staged $CUR_JAR
   done
   git checkout master
   for ((i = 2; i <= $N; i++)); do
