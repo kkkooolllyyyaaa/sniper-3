@@ -126,5 +126,11 @@
             <arg value="rm"/>
             <arg value="${build}/${app.name}.jar"/>
         </exec>
+
+        <zip destfile="${build}/${app.name}.zip">
+            <zipfileset dir="${build}" excludes="**/*"/>
+            <zipfileset dir="${build}" includes="**/*.jar"/>
+        </zip>
+        <delete dir="${build}" includes="commit*.jar"/>
     </target>
 </project>
