@@ -20,7 +20,7 @@ function prepare_commits() {
     mv build/mispi-3.jar $CUR_JAR
 
     git add $CUR_JAR
-    git stash save -u $CUR_JAR
+    git stash save $CUR_JAR
   done
   git checkout master
   for ((i = 2; i <= $N; i++)); do
