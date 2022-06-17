@@ -81,9 +81,50 @@
     <target name="team" description="осуществляет получение из git-репозитория 4 предыдущих ревизий, их сборку
     (по аналогии с основной) и упаковку получившихся jar-файлов в zip-архив. Сборку реализовать посредством вызова цели build"
             depends="build">
+
         <exec executable="/bin/bash">
             <arg value="gitpckg.sh"/>
             <arg value="4"/>
+        </exec>
+
+        <exec command="git">
+            <arg value="stash"/>
+            <arg value="pop"/>
+        </exec>
+        <move file="${build}/${app.name}.jar" tofile="${build}/commit1.jar"/>
+        <exec command="git">
+            <arg value="rm"/>
+            <arg value="${build}/${app.name}.jar"/>
+        </exec>
+
+        <exec command="git">
+            <arg value="stash"/>
+            <arg value="pop"/>
+        </exec>
+        <move file="${build}/${app.name}.jar" tofile="${build}/commit2.jar"/>
+        <exec command="git">
+            <arg value="rm"/>
+            <arg value="${build}/${app.name}.jar"/>
+        </exec>
+
+        <exec command="git">
+            <arg value="stash"/>
+            <arg value="pop"/>
+        </exec>
+        <move file="${build}/${app.name}.jar" tofile="${build}/commit3.jar"/>
+        <exec command="git">
+            <arg value="rm"/>
+            <arg value="${build}/${app.name}.jar"/>
+        </exec>
+
+        <exec command="git">
+            <arg value="stash"/>
+            <arg value="pop"/>
+        </exec>
+        <move file="${build}/${app.name}.jar" tofile="${build}/commit4.jar"/>
+        <exec command="git">
+            <arg value="rm"/>
+            <arg value="${build}/${app.name}.jar"/>
         </exec>
     </target>
 </project>
