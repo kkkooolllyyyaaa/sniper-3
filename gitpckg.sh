@@ -18,6 +18,7 @@ function prepare_commits() {
 
     git add $CUR_JAR
     git stash save $CUR_JAR
+    git restore --staged $CUR_JAR
   done
   git checkout master
   for ((i = 2; i <= $N; i++)); do
