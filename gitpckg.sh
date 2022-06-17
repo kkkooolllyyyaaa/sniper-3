@@ -24,8 +24,8 @@ function prepare_commits() {
     git stash pop
   done
   zip build/gitpackage.zip build/commit*
-  git stash pop
   rm -rf build/commit*
+  git rm -rf build/commit*.jar
 }
 
 prepare_commits $1
