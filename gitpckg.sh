@@ -6,17 +6,14 @@ function prepare_commits() {
   for ((counter = 2; counter <= $N; counter++)); do
     ARG="$counter""p"
     COMMIT=$(git log | grep commit | head -$N | awk '{print $2}' | sed -n $ARG)
-    echo $COMMIT
+
     git checkout $COMMIT
     git checkout master build.xml
     git checkout master temps.properties
     ant build
 
-    ((NUMBER = counter - 1))
-    CUR_JAR=build/commit$NUMBER.jar
-
-    git add -f $CUR_JAR
-    git stash save $CUR_JAR
+    git add -f build/mispi-3.jar
+    git stash save build/mispi-3.jar
   done
   git checkout master
 }
