@@ -28,6 +28,7 @@ public class SniperPointsDAO implements PointsDAO {
     public boolean addPoint(Point point) {
         try {
             begin();
+
             em.persist(point);
             em.flush();
             em.clear();
