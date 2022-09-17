@@ -4,14 +4,15 @@ import com.tsypk.sniper3.database.PointsDAO;
 import com.tsypk.sniper3.database.SniperPointsDAO;
 import com.tsypk.sniper3.graph.Graph;
 import com.tsypk.sniper3.graph.shapes.*;
+import com.tsypk.sniper3.mBeans.MBeanServerManager;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -27,7 +28,7 @@ import java.util.Set;
  * @project sniper-3
  */
 
-@Named
+@ManagedBean(eager = true)
 @ApplicationScoped
 @Getter
 @Setter
@@ -56,6 +57,7 @@ public class ResultTable {
         Point handledPoint = getHandledPoint();
         Set<ConstraintViolation<Point>> violations = validator.validate(point);
         if (violations.size() == 0 && pointsDAO.addPoint(handledPoint)) {
+            MBeanServerManager.getPcBean().increment();
             points.add(handledPoint);
         }
     }
