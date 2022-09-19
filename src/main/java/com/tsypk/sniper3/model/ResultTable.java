@@ -51,13 +51,16 @@ public class ResultTable {
     }
 
     public void add() {
-        if (!checkFields())
+        if (!checkFields()) {
+
             return;
+        }
 
         Point handledPoint = getHandledPoint();
         Set<ConstraintViolation<Point>> violations = validator.validate(point);
-        if (violations.size() == 0 && pointsDAO.addPoint(handledPoint)) {
-            MBeanServerManager.getPcBean().increment();
+        if (violations.isEmpty() && pointsDAO.addPoint(handledPoint)) {
+            MBeanServerManager.getPcBean().increment(handledPoint.isResult());
+            MBeanServerManager.getAdBean().doDeterminant(handledPoint);
             points.add(handledPoint);
         }
     }

@@ -27,17 +27,20 @@ public class PointsCounter extends NotificationBroadcasterSupport implements Poi
         return new MBeanNotificationInfo[]{info};
     }
 
-    public void increment(){
-        totalPointsCount++;
-        System.out.println("Total points count = " + totalPointsCount);
-        missedPointsCount++;
-        if (totalPointsCount >= 4) {
+    public void increment(boolean isHit) {
+        if (isHit) {
+            totalPointsCount++;
+            missedPointsCount = 0;
+        } else {
+            missedPointsCount++;
+            totalPointsCount++;
+        }
+        if (missedPointsCount >= 4) {
             Notification n = new AttributeChangeNotification(this,
                     currentCount++, System.currentTimeMillis(),
-                    "The number of points is ge 4", "Multiplicity", "int",
+                    "The number of misses is ge 4", "Multiplicity", "int",
                     totalPointsCount - 1, totalPointsCount);
             sendNotification(n);
-            missedPointsCount = 0;
         }
     }
 
