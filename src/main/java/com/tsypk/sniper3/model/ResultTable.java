@@ -61,6 +61,7 @@ public class ResultTable {
         if (violations.isEmpty() && pointsDAO.addPoint(handledPoint)) {
             MBeanServerManager.getPcBean().increment(handledPoint.isResult());
             MBeanServerManager.getAdBean().doDeterminant(handledPoint);
+            MBeanServerManager.getHrBean().doCalc(handledPoint.isResult());
             points.add(handledPoint);
         }
     }
@@ -68,6 +69,11 @@ public class ResultTable {
     public void clearTable() {
         pointsDAO.clear();
         points.clear();
+        MBeanServerManager.getPcBean().setMissedPointsCount(0);
+        MBeanServerManager.getPcBean().setTotalPointsCount(0);
+        MBeanServerManager.getHrBean().setHit(0);
+        MBeanServerManager.getHrBean().setTotal(0);
+        MBeanServerManager.getHrBean().setRatio(0);
     }
 
     private Point getHandledPoint() {

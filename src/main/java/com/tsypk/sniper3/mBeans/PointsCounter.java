@@ -53,4 +53,12 @@ public class PointsCounter extends NotificationBroadcasterSupport implements Poi
     public int getMissedPointsCount() {
         return missedPointsCount;
     }
+
+    public void setTotalPointsCount(int totalPointsCount) {
+        this.totalPointsCount = totalPointsCount;
+    }
+
+    public void setMissedPointsCount(int missedPointsCount) {
+        this.missedPointsCount = missedPointsCount;
+    }
 }
