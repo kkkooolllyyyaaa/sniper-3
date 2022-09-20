@@ -13,16 +13,13 @@ import java.lang.management.ManagementFactory;
 @ApplicationScoped
 
 public class MBeanServerManager {
-    private static PointsCounter pcBean;
-    private static AreaDeterminant adBean;
-    private static HitRatio hrBean;
+    private static final PointsCounter pcBean = new PointsCounter();
+    private static final AreaDeterminant adBean = new AreaDeterminant();
+    private static final HitRatio hrBean = new HitRatio();
 
     public MBeanServerManager() {
-        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-        pcBean = new PointsCounter();
-        adBean = new AreaDeterminant();
-        hrBean = new HitRatio();
         try {
+            MBeanServer server = ManagementFactory.getPlatformMBeanServer();
             ObjectName pcName = new ObjectName("web:type=PointsCounter");
             server.registerMBean(pcBean, pcName);
             ObjectName adName = new ObjectName("web:type=AreaDeterminant");
@@ -30,7 +27,7 @@ public class MBeanServerManager {
             ObjectName hrName = new ObjectName("web:type=HitRatio");
             server.registerMBean(hrBean, hrName);
         } catch (InstanceAlreadyExistsException | MBeanRegistrationException | NotCompliantMBeanException | MalformedObjectNameException e) {
-            System.out.println("Something wrong");
+            System.out.println("Something wrong " + e);
         }
     }
 
