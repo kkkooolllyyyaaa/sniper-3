@@ -28,33 +28,37 @@ public class PointsCounter extends NotificationBroadcasterSupport implements Poi
     }
 
     public void increment(boolean isHit) {
-        if (isHit) {
-            totalPointsCount++;
-            missedPointsCount = 0;
-        } else {
+        totalPointsCount++;
+        if (!isHit) {
             missedPointsCount++;
-            totalPointsCount++;
+            currentCount++;
+        } else {
+            currentCount = 0;
         }
-        if (missedPointsCount >= 4) {
-            System.out.println("notification worker ABAS");
-            Notification n = new AttributeChangeNotification(this,
-                    currentCount++, System.currentTimeMillis(),
-                    "The number of misses is ge 4", "Multiplicity", "int",
-                    totalPointsCount - 1, totalPointsCount);
+        if (currentCount >= 4) {
+            Notification n = new AttributeChangeNotification(
+                    this,
+                    currentCount,
+                    System.currentTimeMillis(),
+                    "The number of misses in a row is ge 4",
+                    "Misses in a row",
+                    "int",
+                    currentCount - 1,
+                    currentCount
+            );
+
             sendNotification(n);
-            missedPointsCount = 0;
+            currentCount = 0;
         }
     }
 
     @Override
     public int getTotalPointsCount() {
-        System.out.println("Total points count = " + totalPointsCount);
         return totalPointsCount;
     }
 
     @Override
-    public int getMissedInARowCount() {
-        System.out.println("Total missed points count = " + missedPointsCount);
+    public int getMissedPointsCount() {
         return missedPointsCount;
     }
 

@@ -6,6 +6,6 @@ public class HitRatio implements HitRatioMBean {
     @Override
     public double getRatio() {
         PointsCounter pcBean = MBeanServerManager.getPcBean();
-        return (1 - (double) pcBean.getMissedInARowCount() / (double) pcBean.getTotalPointsCount());
+        return (1 - (double) pcBean.getMissedPointsCount() / (double) pcBean.getTotalPointsCount());
     }
 }
