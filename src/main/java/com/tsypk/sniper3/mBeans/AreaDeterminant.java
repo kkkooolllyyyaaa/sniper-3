@@ -6,14 +6,14 @@ import javax.management.NotificationBroadcasterSupport;
 
 public class AreaDeterminant extends NotificationBroadcasterSupport implements AreaDeterminantMBean {
 
-    double squareArea = 0;
-    double triangleArea = 0;
-    double arcArea = 0;
+    private double squareArea = 0;
+    private double triangleArea = 0;
+    private double arcArea = 0;
 
     public void doDeterminant(Point point) {
-        squareArea = Math.pow(point.getRadius(), 2);
-        triangleArea = (Math.pow(point.getRadius(), 2) * Math.PI / 2);
-        arcArea = 0.5 * Math.pow(point.getRadius(), 2);
+        squareArea = Math.pow(point.getRadius(), 2.0D);
+        arcArea = (Math.pow(point.getRadius() / 2.0D, 2) * Math.PI) / 4.0D;
+        triangleArea = 0.5 * Math.pow(point.getRadius() / 2.0D, 2);
     }
 
     @Override
